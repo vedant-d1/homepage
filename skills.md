@@ -47,7 +47,7 @@ The platform caters to three primary user personas:
 ## 4. Technical Architecture & Stack
 *Note: This stack is a recommendation and can be adjusted as development progresses.*
 - **Frontend Framework**: Next.js (App Router) or React (Vite) for fast, dynamic, and SEO-friendly rendering.
-- **Styling**: Tailwind CSS with custom curated color palettes. Focus on modern UI aesthetics (glassmorphism nuances, smooth micro-animations).
+- **Styling**: Tailwind CSS with custom curated color palettes. Focus on modern UI aesthetics (liquid glassmorphism, heavy backdrop blurs, translucent inner borders, smooth micro-animations).
 - **Backend/API**: Next.js Server Actions / API Routes OR a dedicated Node.js/Express REST/GraphQL API.
 - **Database**: PostgreSQL (Structured relations for Users, Materials, Groups) or MongoDB (Flexible document storage for varied metadata).
 - **File Storage**: AWS S3, Supabase Storage, or Appwrite Storage for secure file handling.

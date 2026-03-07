@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyPlatform — Create Your Account</title>
+    <meta name="description"
+        content="Sign up for StudyPlatform to access premium study materials, notes, PYQs, and collaborative study groups." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Engine & Tailwind Config -->
+    <script src="../theme.js"></script>
+
+    <!-- Signup Page Styles -->
+    <link rel="stylesheet" href="signup.css" />
+</head>
+
+<body class="bg-bg-dark font-display text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+    <!-- Floating Particles Container -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <div class="relative flex h-auto min-h-screen w-full flex-col">
+
+        <!-- ═══════════ HEADER ═══════════ -->
+        <header id="main-header"
+            class="flex items-center justify-between whitespace-nowrap px-5 md:px-12 py-4 z-30 bg-[#0e1015]/30 backdrop-blur-xl border-b border-white/[0.04]">
+            <div class="flex items-center gap-3 text-white">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-yellow-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                    <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
+                    </svg>
+                </div>
+                <a href="login.html"
+                    class="text-lg font-bold tracking-tight hover:text-primary transition-colors">StudyPlatform</a>
+            </div>
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-[13px] font-medium text-slate-400 hover:text-primary transition-colors duration-300"
+                        href="#">Home</a>
+                    <a class="text-[13px] font-medium text-slate-400 hover:text-primary transition-colors duration-300"
+                        href="#">Browse</a>
+                    <a class="text-[13px] font-medium text-slate-400 hover:text-primary transition-colors duration-300"
+                        href="#">Groups</a>
+                </nav>
+                <a href="login.html"
+                    class="hidden sm:flex min-w-[80px] cursor-pointer items-center justify-center rounded-lg h-9 px-4 bg-primary/10 hover:bg-primary/20 text-primary text-[13px] font-semibold transition-all duration-300 border border-primary/20 hover:border-primary/40">
+                    <span>Sign In</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- ═══════════ MAIN CONTENT ═══════════ -->
+        <div class="flex-1 flex items-center justify-center py-6 px-4 sm:px-8 relative">
+
+            <!-- Background ambient glow -->
+            <div class="absolute inset-0 pointer-events-none z-0"
+                style="background: radial-gradient(ellipse 60% 60% at 50% 40%, color-mix(in srgb, var(--primary-color) 6%, transparent) 0%, transparent 70%);">
+            </div>
+
+            <div class="w-full max-w-[460px] relative z-10">
+
+                <!-- ─────── Signup Card ─────── -->
+                <div id="signup-card"
+                    class="w-full flex flex-col gap-5 bg-[#0e1015]/40 backdrop-blur-[32px] saturate-150 p-9 rounded-[22px] border border-white/[0.08] border-t-white/[0.15] border-l-white/[0.12] relative overflow-hidden"
+                    style="box-shadow: 0 32px 64px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 80px -20px color-mix(in srgb, var(--primary-color) 15%, transparent);">
+                    <div
+                        class="absolute -top-28 -left-28 w-56 h-56 bg-primary/[0.06] blur-[70px] rounded-full pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute -bottom-20 -right-20 w-40 h-40 bg-primary/[0.03] blur-[60px] rounded-full pointer-events-none">
+                    </div>
+
+                    <!-- Header -->
+                    <div class="flex flex-col gap-1.5 text-left z-10">
+                        <h1 class="text-3xl font-extrabold leading-tight tracking-tight text-white">Create Account
+                        </h1>
+                        <p class="text-[13px] font-normal leading-relaxed text-slate-500">
+                            Join StudyPlatform and start sharing, discovering, and collaborating on study materials.
+                        </p>
+                    </div>
+
+                    <!-- Google Sign-Up Button (first for prominence) -->
+                    <button id="google-signup-btn"
+                        class="social-btn flex items-center justify-center gap-2.5 h-12 rounded-xl bg-white/[0.03] backdrop-blur-lg border border-white/[0.07] hover:bg-white/[0.08] hover:border-white/[0.15] cursor-pointer z-10 transition-all duration-300">
+                        <svg width="18" height="18" viewBox="0 0 24 24">
+                            <path fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                            <path fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                            <path fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                        <span class="text-[13px] font-semibold text-slate-300">Sign up with Google</span>
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="flex items-center gap-3 z-10">
+                        <div class="flex-1 h-px bg-white/[0.06]"></div>
+                        <span class="text-[11px] text-slate-600 font-medium uppercase tracking-widest select-none">Or
+                            sign up with email</span>
+                        <div class="flex-1 h-px bg-white/[0.06]"></div>
+                    </div>
+
+                    <!-- Email/Password Sign-Up Form -->
+                    <form id="signup-form" class="flex flex-col gap-4 z-10" onsubmit="handleEmailSignUp(event)">
+                        <label class="flex flex-col w-full gap-1.5">
+                            <span class="text-[13px] font-medium text-slate-400">Full Name</span>
+                            <div class="relative group input-glow rounded-xl transition-all duration-300">
+                                <span
+                                    class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors duration-300"
+                                    style="font-size:20px;">person</span>
+                                <input id="input-fullname"
+                                    class="flex w-full rounded-xl text-white focus:outline-none border border-white/[0.07] bg-white/[0.03] backdrop-blur-md h-12 placeholder:text-slate-600 pl-11 pr-4 text-sm transition-all duration-300 focus:border-primary/30 focus:bg-white/[0.05]"
+                                    placeholder="Enter your full name" autocomplete="name" />
+                            </div>
+                        </label>
+                        <label class="flex flex-col w-full gap-1.5">
+                            <span class="text-[13px] font-medium text-slate-400">Email Address</span>
+                            <div class="relative group input-glow rounded-xl transition-all duration-300">
+                                <span
+                                    class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors duration-300"
+                                    style="font-size:20px;">mail</span>
+                                <input id="input-email" type="email"
+                                    class="flex w-full rounded-xl text-white focus:outline-none border border-white/[0.07] bg-white/[0.03] backdrop-blur-md h-12 placeholder:text-slate-600 pl-11 pr-4 text-sm transition-all duration-300 focus:border-primary/30 focus:bg-white/[0.05]"
+                                    placeholder="you@example.com" autocomplete="email" />
+                            </div>
+                        </label>
+                        <label class="flex flex-col w-full gap-1.5">
+                            <span class="text-[13px] font-medium text-slate-400">Password</span>
+                            <div class="relative group input-glow rounded-xl transition-all duration-300">
+                                <span
+                                    class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors duration-300"
+                                    style="font-size:20px;">lock</span>
+                                <input id="input-password"
+                                    class="flex w-full rounded-xl text-white focus:outline-none border border-white/[0.07] bg-white/[0.03] backdrop-blur-md h-12 placeholder:text-slate-600 pl-11 pr-11 text-sm transition-all duration-300 focus:border-primary/30 focus:bg-white/[0.05]"
+                                    placeholder="Create a strong password" type="password"
+                                    autocomplete="new-password" />
+                                <button type="button" id="toggle-password"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors duration-300 cursor-pointer"
+                                    onclick="togglePasswordVisibility()">
+                                    <span class="material-symbols-outlined" style="font-size:20px;"
+                                        id="pw-icon">visibility_off</span>
+                                </button>
+                            </div>
+                        </label>
+
+                        <!-- Password Strength Indicator -->
+                        <div id="password-strength" class="hidden flex flex-col gap-1.5">
+                            <div class="flex gap-1">
+                                <div
+                                    class="strength-bar flex-1 h-1 rounded-full bg-white/[0.06] transition-all duration-300">
+                                </div>
+                                <div
+                                    class="strength-bar flex-1 h-1 rounded-full bg-white/[0.06] transition-all duration-300">
+                                </div>
+                                <div
+                                    class="strength-bar flex-1 h-1 rounded-full bg-white/[0.06] transition-all duration-300">
+                                </div>
+                                <div
+                                    class="strength-bar flex-1 h-1 rounded-full bg-white/[0.06] transition-all duration-300">
+                                </div>
+                            </div>
+                            <span id="strength-text" class="text-[11px] font-medium text-slate-600"></span>
+                        </div>
+
+                        <button id="signup-submit-btn" type="submit"
+                            class="btn-shimmer mt-1 flex w-full cursor-pointer items-center justify-center rounded-xl h-12 bg-gradient-to-r from-primary to-primary-dark text-white text-sm font-bold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                            style="box-shadow: 0 8px 30px color-mix(in srgb, var(--primary-color) 25%, transparent);"
+                            onmouseover="this.style.boxShadow='0 14px 40px color-mix(in srgb, var(--primary-color) 40%, transparent)'"
+                            onmouseout="this.style.boxShadow='0 8px 30px color-mix(in srgb, var(--primary-color) 25%, transparent)'">
+                            <span id="btn-text">Create Account</span>
+                            <svg id="btn-loader" class="hidden loader-spin ml-2" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path
+                                    d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                            </svg>
+                        </button>
+                    </form>
+
+                    <p class="text-center text-[12px] text-slate-600 z-10 select-none">
+                        Already have an account?
+                        <a href="login.html"
+                            class="text-primary/90 hover:text-primary font-semibold transition-colors">Sign
+                            In</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-4 px-4 z-10">
+            <p class="text-[11px] text-slate-700 font-medium">
+                © 2026 StudyPlatform · Built for students, by students.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-6 right-6 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Signup Page Scripts -->
+    <script src="supabase-config.js"></script>
+    <script src="signup.js"></script>
+</body>
+
+</html>

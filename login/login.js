@@ -25,7 +25,7 @@ function createParticles() {
         p.style.height = size + 'px';
         p.style.left = Math.random() * 45 + '%';
         p.style.top = Math.random() * 100 + '%';
-        p.style.backgroundColor = `rgba(242, 185, 13, ${Math.random() * 0.4 + 0.1})`;
+        p.style.backgroundColor = `color-mix(in srgb, var(--primary-color) ${Math.floor(Math.random() * 40 + 10)}%, transparent)`;
         container.appendChild(p);
         particles.push(p);
 
@@ -207,8 +207,8 @@ function createFireflySVG() {
         <ellipse cx="15" cy="13" rx="2.8" ry="2.5" fill="#332d25"/>
         <!-- Abdomen (glowing) -->
         <g class="glow-abdomen">
-            <ellipse cx="15" cy="19" rx="3" ry="4.5" fill="#f2b90d"/>
-            <ellipse cx="15" cy="19" rx="2" ry="3" fill="#ffe066" opacity="0.6"/>
+            <ellipse cx="15" cy="19" rx="3" ry="4.5" fill="var(--primary-color)"/>
+            <ellipse cx="15" cy="19" rx="2" ry="3" fill="color-mix(in srgb, var(--primary-color) 80%, white 20%)" opacity="0.6"/>
         </g>
         <!-- Legs -->
         <line x1="13" y1="12" x2="9" y2="16" stroke="rgba(150,130,100,0.4)" stroke-width="0.5"/>
@@ -354,3 +354,127 @@ function initCursorRepulsion() {
 
     requestAnimationFrame(checkProximity);
 }
+
+// ═══════════ Supabase Google Authentication ═══════════
+
+// ───── Toast Notification System ─────
+function showToast(message, type = 'info', duration = 4000) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+
+    const icons = {
+        success: 'check_circle',
+        error: 'error',
+        info: 'info',
+    };
+
+    toast.innerHTML = `
+        <span class="material-symbols-outlined toast-icon" style="font-size:20px;">${icons[type] || icons.info}</span>
+        <span class="toast-message">${message}</span>
+    `;
+
+    container.appendChild(toast);
+
+    gsap.fromTo(toast,
+        { opacity: 0, x: 40, scale: 0.95 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.4, ease: "back.out(1.4)" }
+    );
+
+    setTimeout(() => {
+        gsap.to(toast, {
+            opacity: 0, x: 40, scale: 0.9,
+            duration: 0.3, ease: "power2.in",
+            onComplete: () => toast.remove()
+        });
+    }, duration);
+}
+
+// ───── Google Sign-In via Supabase OAuth ─────
+async function handleGoogleSignIn() {
+    const googleBtn = document.getElementById('google-btn');
+    if (!googleBtn) return;
+
+    // Prevent double-clicks
+    if (googleBtn.dataset.loading === 'true') return;
+    googleBtn.dataset.loading = 'true';
+
+    // Save original content & show loading state
+    const originalHTML = googleBtn.innerHTML;
+    googleBtn.innerHTML = `
+        <svg class="loader-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        </svg>
+        <span class="text-[12px] font-medium text-slate-400">Signing in...</span>
+    `;
+    googleBtn.classList.add('btn-loading');
+
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+            redirectTo: window.location.origin + window.location.pathname,
+        },
+    });
+
+    if (error) {
+        console.error('❌ Google sign-in error:', error);
+
+        let errorMessage = 'Something went wrong. Please try again.';
+        if (error.message.includes('popup')) {
+            errorMessage = 'Pop-up blocked! Please allow pop-ups and retry.';
+        } else if (error.message.includes('network')) {
+            errorMessage = 'Network error. Check your connection.';
+        }
+
+        showToast(errorMessage, 'error', 5000);
+
+        // Restore button
+        googleBtn.innerHTML = originalHTML;
+        googleBtn.classList.remove('btn-loading');
+        googleBtn.dataset.loading = 'false';
+    }
+
+    // If no error, Supabase will redirect the user to Google's consent screen.
+    // On return, the auth state listener below will detect the session.
+}
+
+// ───── Auth State Listener ─────
+supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+        const user = session.user;
+        const displayName = user.user_metadata?.full_name || user.email || 'User';
+        console.log('🔐 User signed in:', displayName, user.email);
+
+        showToast(`Welcome, ${displayName}! 🎉`, 'success', 3500);
+
+        // Update Google button to show success
+        const googleBtn = document.getElementById('google-btn');
+        if (googleBtn) {
+            googleBtn.innerHTML = `
+                <span class="material-symbols-outlined text-green-400" style="font-size:20px;">check_circle</span>
+                <span class="text-[12px] font-medium text-green-400">Signed in as ${displayName}</span>
+            `;
+            googleBtn.classList.remove('btn-loading');
+            googleBtn.classList.add('btn-success');
+        }
+
+        // Redirect after a short delay
+        setTimeout(() => {
+            // window.location.href = '../home/home.html';
+            console.log('🚧 Auto-redirect disabled so you can preview the login UI.');
+        }, 2000);
+
+    } else if (event === 'SIGNED_OUT') {
+        console.log('🔓 User signed out.');
+    }
+});
+
+// ───── Wire up Google Button ─────
+document.addEventListener('DOMContentLoaded', () => {
+    const googleBtn = document.getElementById('google-btn');
+    if (googleBtn) {
+        googleBtn.addEventListener('click', handleGoogleSignIn);
+    }
+});
