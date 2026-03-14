@@ -1,0 +1,114 @@
+/* home.css - Recreated automatically */
+
+/* Custom Scrollbar for the AI results area */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Tool Buttons Click Animation */
+.tool-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.tool-btn:active::after {
+    width: 200px;
+    height: 200px;
+    transition: width 0s, height 0s;
+}
+
+/* Toast Notifications Animation */
+.toast-enter {
+    animation: toastSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.toast-exit {
+    animation: toastFadeOut 0.3s ease forwards;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toastFadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+        margin-bottom: -50px;
+    }
+}
+
+/* Markdown Prose Styles */
+.prose {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.prose h1, .prose h2, .prose h3 {
+    color: #fff;
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.prose p {
+    margin-bottom: 1em;
+}
+
+.prose strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+.prose ul {
+    list-style-type: disc;
+    padding-left: 1.5em;
+    margin-bottom: 1em;
+}
+
+.prose li {
+    margin-bottom: 0.25em;
+}
+
+.prose blockquote {
+    border-left: 3px solid var(--primary-color, #fbbf24);
+    padding-left: 1em;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0 4px 4px 0;
+}

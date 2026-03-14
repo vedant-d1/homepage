@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyPlatform — Home</title>
+    <meta name="description" content="Your study hub for materials, notes, PYQs, and AI-powered study tools." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- PDF.js for client-side PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+
+    <!-- Mermaid.js for mind maps -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+    <!-- Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Engine & Tailwind Config -->
+    <script src="../theme.js"></script>
+
+    <link rel="stylesheet" href="home.css" />
+</head>
+
+<body class="bg-bg-dark font-display text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- ═══════════ HEADER ═══════════ -->
+    <header
+        class="flex items-center justify-between whitespace-nowrap px-5 md:px-12 py-4 z-30 bg-[#0e1015]/30 backdrop-blur-xl border-b border-white/[0.04]">
+        <div class="flex items-center gap-3 text-white">
+            <div
+                class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-yellow-500 flex items-center justify-center shadow-lg shadow-primary/20">
+                <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
+                </svg>
+            </div>
+            <h2 class="text-lg font-bold tracking-tight">StudyPlatform</h2>
+        </div>
+        <div class="flex items-center gap-4">
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-[13px] font-medium text-primary border-b border-primary pb-0.5" href="#">Home</a>
+                <a class="text-[13px] font-medium text-slate-400 hover:text-primary transition-colors duration-300"
+                    href="#">Browse</a>
+                <a class="text-[13px] font-medium text-slate-400 hover:text-primary transition-colors duration-300"
+                    href="#">Groups</a>
+            </nav>
+            <div id="user-avatar"
+                class="w-8 h-8 rounded-full bg-surface border border-white/10 flex items-center justify-center cursor-pointer hover:border-primary/30 transition-all">
+                <span class="material-symbols-outlined text-slate-400" style="font-size:18px;">person</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════ MAIN CONTENT ═══════════ -->
+    <main class="flex-1 flex flex-col items-center justify-center px-6 py-16 relative">
+        <!-- Background glow -->
+        <div class="absolute inset-0 pointer-events-none"
+            style="background: radial-gradient(ellipse 50% 50% at 50% 30%, color-mix(in srgb, var(--primary-color) 4%, transparent) 0%, transparent 70%);">
+        </div>
+
+        <div class="text-center z-10 max-w-xl">
+            <div
+                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-dark/10 border border-primary/10 backdrop-blur-lg flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-primary" style="font-size:32px;">school</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+                Welcome to <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-400">StudyPlatform</span>
+            </h1>
+            <p class="text-slate-500 text-[15px] leading-relaxed mb-8">
+                Your collaborative hub for study materials, notes, and AI-powered learning tools. Upload PDFs, get
+                instant summaries, and ace your exams.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <div class="flex items-center gap-2.5 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] border-t-white/[0.12] rounded-xl px-5 py-3.5 hover:bg-white/[0.06] transition-all duration-300"
+                    style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);">
+                    <span class="material-symbols-outlined text-primary" style="font-size:22px;">auto_awesome</span>
+                    <span class="text-[13px] text-slate-400 font-medium">AI Summaries</span>
+                </div>
+                <div class="flex items-center gap-2.5 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] border-t-white/[0.12] rounded-xl px-5 py-3.5 hover:bg-white/[0.06] transition-all duration-300"
+                    style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);">
+                    <span class="material-symbols-outlined text-primary" style="font-size:22px;">quiz</span>
+                    <span class="text-[13px] text-slate-400 font-medium">Smart Quizzes</span>
+                </div>
+                <div class="flex items-center gap-2.5 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] border-t-white/[0.12] rounded-xl px-5 py-3.5 hover:bg-white/[0.06] transition-all duration-300"
+                    style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);">
+                    <span class="material-symbols-outlined text-primary" style="font-size:22px;">account_tree</span>
+                    <span class="text-[13px] text-slate-400 font-medium">Mind Maps</span>
+                </div>
+            </div>
+            <p class="text-[12px] text-slate-600 mt-8">
+                <span class="material-symbols-outlined align-middle mr-1" style="font-size:16px;">arrow_downward</span>
+                Try the AI Study Assistant in the bottom-right corner
+            </p>
+        </div>
+    </main>
+
+    <!-- ═══════════ AI CHATBOT WIDGET ═══════════ -->
+
+    <!-- Floating toggle button -->
+    <button id="chatbot-toggle"
+        class="fixed bottom-6 right-6 z-[999] w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-lg shadow-primary/30 flex items-center justify-center cursor-pointer hover:scale-110 hover:shadow-primary/50 transition-all duration-300 group"
+        onclick="toggleChatbot()">
+        <span id="chatbot-icon-open" class="material-symbols-outlined text-gray-900 transition-transform duration-300"
+            style="font-size:26px;">auto_awesome</span>
+        <span id="chatbot-icon-close"
+            class="material-symbols-outlined text-gray-900 hidden transition-transform duration-300"
+            style="font-size:26px;">close</span>
+        <!-- Pulse ring -->
+        <span
+            class="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-40 group-hover:opacity-0 transition-opacity"></span>
+    </button>
+
+    <!-- Chatbot Panel -->
+    <div id="chatbot-panel"
+        class="fixed bottom-24 right-6 z-[998] w-[400px] max-h-[600px] bg-[#0e1015]/40 backdrop-blur-[32px] saturate-150 rounded-[20px] border border-white/[0.08] border-t-white/[0.15] border-l-white/[0.12] shadow-2xl flex-col overflow-hidden hidden"
+        style="box-shadow: 0 32px 64px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 80px -20px color-mix(in srgb, var(--primary-color) 15%, transparent);">
+
+        <!-- Panel Header -->
+        <div class="flex items-center gap-3 px-5 py-4 border-b border-white/[0.06]">
+            <div
+                class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary/20 to-yellow-500/10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary" style="font-size:20px;">auto_awesome</span>
+            </div>
+            <div class="flex-1">
+                <h3 class="text-[14px] font-bold text-white">AI Study Assistant</h3>
+                <p class="text-[11px] text-slate-500">Upload a PDF to get started</p>
+            </div>
+        </div>
+
+        <!-- Upload Zone (shown when no PDF loaded) -->
+        <div id="upload-zone" class="flex-1 flex flex-col items-center justify-center p-6">
+            <div id="drop-zone"
+                class="w-full border-2 border-dashed border-white/[0.08] rounded-2xl p-8 flex flex-col items-center gap-4 cursor-pointer hover:border-primary/30 hover:bg-primary/[0.02] transition-all duration-300"
+                onclick="document.getElementById('pdf-input').click()">
+                <div class="w-14 h-14 rounded-2xl bg-primary/[0.08] flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary/70" style="font-size:28px;">upload_file</span>
+                </div>
+                <div class="text-center">
+                    <p class="text-[13px] font-semibold text-slate-300">Drop your PDF here</p>
+                    <p class="text-[11px] text-slate-600 mt-1">or click to browse files</p>
+                </div>
+            </div>
+            <input type="file" id="pdf-input" accept=".pdf" class="hidden" onchange="handleFileSelect(event)" />
+        </div>
+
+        <!-- PDF Loaded State -->
+        <div id="pdf-loaded" class="hidden flex-1 flex flex-col overflow-hidden">
+            <!-- File info bar -->
+            <div class="flex items-center gap-3 px-5 py-3 bg-primary/[0.04] border-b border-white/[0.04]">
+                <span class="material-symbols-outlined text-primary" style="font-size:18px;">description</span>
+                <span id="pdf-filename" class="text-[12px] font-medium text-slate-300 truncate flex-1"></span>
+                <button onclick="resetChatbot()"
+                    class="text-slate-500 hover:text-red-400 transition-colors cursor-pointer">
+                    <span class="material-symbols-outlined" style="font-size:18px;">close</span>
+                </button>
+            </div>
+
+            <!-- Tool Buttons -->
+            <div class="grid grid-cols-2 gap-2 p-4">
+                <button onclick="generateAI('summary')"
+                    class="tool-btn flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-primary/[0.06] hover:border-primary/20 cursor-pointer transition-all duration-300">
+                    <span class="material-symbols-outlined text-blue-400" style="font-size:20px;">summarize</span>
+                    <span class="text-[12px] font-semibold text-slate-300">Summary</span>
+                </button>
+                <button onclick="generateAI('notes')"
+                    class="tool-btn flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-primary/[0.06] hover:border-primary/20 cursor-pointer transition-all duration-300">
+                    <span class="material-symbols-outlined text-green-400" style="font-size:20px;">sticky_note_2</span>
+                    <span class="text-[12px] font-semibold text-slate-300">Short Notes</span>
+                </button>
+                <button onclick="generateAI('quiz')"
+                    class="tool-btn flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-primary/[0.06] hover:border-primary/20 cursor-pointer transition-all duration-300">
+                    <span class="material-symbols-outlined text-yellow-400" style="font-size:20px;">quiz</span>
+                    <span class="text-[12px] font-semibold text-slate-300">Quiz</span>
+                </button>
+                <button onclick="generateAI('mindmap')"
+                    class="tool-btn flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-primary/[0.06] hover:border-primary/20 cursor-pointer transition-all duration-300">
+                    <span class="material-symbols-outlined text-purple-400" style="font-size:20px;">account_tree</span>
+                    <span class="text-[12px] font-semibold text-slate-300">Mind Map</span>
+                </button>
+            </div>
+
+            <!-- Results Area (scrollable) -->
+            <div id="results-area" class="flex-1 overflow-y-auto px-4 pb-4 space-y-3">
+                <!-- AI results will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-container" class="fixed top-6 right-6 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Fullscreen Mind Map Modal -->
+    <div id="mindmap-modal"
+        class="fixed inset-0 z-[10000] bg-bg-dark/95 backdrop-blur-xl hidden flex-col opacity-0 transition-opacity duration-300">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-bg-card/50">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-purple-400" style="font-size:24px;">account_tree</span>
+                <h3 class="text-lg font-bold text-white">Interactive Mind Map</h3>
+            </div>
+            <button onclick="closeMindMapModal()"
+                class="w-10 h-10 rounded-full bg-white/[0.05] hover:bg-white/[0.1] flex items-center justify-center transition-colors cursor-pointer text-slate-300 hover:text-white">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div id="mindmap-fullscreen-container"
+            class="flex-1 overflow-auto p-8 flex items-start justify-center cursor-grab active:cursor-grabbing">
+            <!-- Full SVG will be injected here -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../login/supabase-config.js"></script>
+    <script src="home.js"></script>
+</body>
+
+</html>
